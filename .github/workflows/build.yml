@@ -3,7 +3,7 @@ name: Build
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     build:
@@ -13,7 +13,7 @@ jobs:
             - uses: actions/checkout@v2
               with:
                   fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-            - name: Set up JDK 17
+            - name: Set up JDK 11
               uses: actions/setup-java@v1
               with:
                   java-version: 17
@@ -34,6 +34,4 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-              run: |
-                  mvn -B verify
-                  mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mbasse-ynov-backend -Dsonar.projectName=mbasse-ynov-backend
+              run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cdeguelle-ynov-backend
